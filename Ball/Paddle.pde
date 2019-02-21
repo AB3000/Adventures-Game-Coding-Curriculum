@@ -5,8 +5,8 @@ int paddleWidth = 70; //how long the paddle is
 int paddleHeight = 10; //how thick the paddle is
 
 void draw() {
-  fill(#059859);
-  rect(xPos, yPos, paddleWidth, paddleHeight);
+  fill(#059859); //color of paddle
+  rect(xPos, yPos, paddleWidth, paddleHeight); //draw the paddle
  
   if(keyCode == RIGHT){ //paddle keeps moving to the right once key is pressed
     xPos += 5; //can increase or decrease for speed
@@ -18,13 +18,13 @@ void draw() {
   /*if near right edge, we subtract paddleWidth from the whole width of the screen
     because the rectangle coordinates are drawn from the topleft*/
   if (xPos > (width - paddleWidth)) { 
-     xPos -= 5;
+     xPos -= 5; //push back left
   }
   
   //if near left edge
   if(xPos < 0){ 
-    xPos +=5; 
+    xPos +=5; //push back right
   }
   
-}
+ }
 }

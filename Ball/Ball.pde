@@ -4,11 +4,11 @@ PVector gravity;   // Gravity acts at the shape's acceleration
 
 Paddle p; //paddle we move around
 Powerup pup; //big powerup the player has to catch
-ArrayList<Background> b;
+ArrayList<Background> b; // array of rectangles that fall in the background
 int score; //score of the player
 
 void setup() {
-  size(640,600);
+  size(640,600); //size of the screen
   location = new PVector(width/2,height/2); //make the ball spawn in the middle of the screen
   velocity = new PVector(2,2); //x velocity is 2, y-velocity is 2 
   gravity = new PVector(0,0.15);//there is only vertical gravity, so we set the x-value to 0.
@@ -22,7 +22,6 @@ void setup() {
      b.add(new Background()); //adding a new background rectangle to the list
   }
   
-
 }
 
 void draw() {
@@ -46,29 +45,31 @@ void draw() {
     velocity.x = velocity.x * -1; 
   }
   
-  //add 10 points for the player ball if you hit the powerup
+  //add 10 points for the player if the ball hits the powerup
   if((location.x + 48 >= pup.xPos && location.x < pup.xPos + pup.size)
           && (location.y + 48 >= pup.v && location.y <= pup.v + pup.size)){
-      pup.v = height + 20; //make the powerup go off the screen so it can respawn
+       
+      //makes the powerup go off the screen once it hits the ball so it can respawn above
+      pup.v = height + 20; 
       score += 10;
   }
   
-  //add one point each time the players bounces off the platforms
+  //add one point each time the players bounces off the paddle
   if((location.x >= p.xPos && location.x <= p.xPos + p.paddleWidth)
           && (location.y >= p.yPos && location.y <= p.yPos + p.paddleHeight)){
-      velocity.y = velocity.y * -1; //make the ball bounce off the platform
+      velocity.y = velocity.y * -1; //makes the ball bounce off the paddle, bounces up now
       score += 1; //add one point to the score
   }
   
-  if (location.y > height + 5) { //we are ending the game
-     clear();
-     fill(#FF90A5);
-     textSize(30); 
-     text("Your score is " + score, width/2 - 120, height/2);
+  if (location.y > height + 5) { //game ends when the ball falls below the paddle
+     clear(); //clear the screen
+     fill(#FF90A5); //color of the text
+     textSize(30); //size of the text
+     text("Your score is " + score, width/2 - 120, height/2); //print score at the end of the game
      stop();
   }
 
   // Display circle at location vector
-  fill(127);
-  ellipse(location.x,location.y,48,48);
+  fill(127); 
+  ellipse(location.x,location.y,48,48); //create the ball
 }
